@@ -1,0 +1,22 @@
+<html>
+<body>
+<script language=javascript>
+function opnexl()
+{
+var str=document.demoform.link.value;
+var str1=str.replace(/\\/g,"/");
+var Excl = new ActiveXObject("Excel.Application");
+var wrkbk = Excl.workbooks.open(str1);
+var wrksheet = wrkbk.worksheets(1);
+document.demoform.me.value=wrksheet.Range("A1").value;
+Excl.quit();
+}
+</script>
+<form action='<?php echo($_SERVER["PHP_SELF"]) ?>' method='post' name="demoform">
+<div id="divOutput">
+file:<input type=text name=link id=lnk>
+Date:<input type=text name=me onFocus="opnexl()">
+</div>
+</form>
+</body>
+</html>

@@ -1,0 +1,119 @@
+create table spc(
+    USN varchar(20),
+    primary key(USN))engine=innodb;
+
+
+create table login(
+    USN varchar(20),
+    PASWORD varchar(20),
+    primary key(USN),
+    foreign key(USN) references spc(USN)on delete cascade)engine=innodb;
+
+
+create table student(
+    NAME varchar(20),
+    USN varchar(20),
+    BRANCH varchar(20),
+    EMAIL varchar(20),
+    PASWORD varchar(20),
+    PHONE decimal(11,0),
+    CGPA decimal(10,2),
+    TENTH decimal(10,2),
+    TWELTH decimal(10,2),
+    DIP decimal(10,2),
+    primary key(USN))engine=innodb;
+
+
+create table company(
+    CNAME varchar(20),
+    PACKAGE double,
+    GPACUTOFF decimal(10,2),
+    TENTHCUTOFF decimal(10,2),
+   TWELTHCUTOFF decimal(10,2),
+    DIPCUTOFF decimal(10,2),
+    LASTDATEREG varchar(50),
+    primary key(CNAME))engine=innodb;
+
+
+
+create table applied(
+    USN varchar(20),
+    CNAME varchar(20),
+    DATE date,
+    primary key(USN,CNAME),
+    foreign key(USN)references student(USN)on delete cascade,
+    foreign key(CNAME)references company(CNAME)on delete cascade)engine=innodb;
+
+
+create table branches(
+    BRANCH varchar(20),
+    primary key(BRANCH))engine=innodb;
+
+create table beligible(
+    CNAME varchar(20),
+    BRANCH varchar(20),
+    primary key(BRANCH),
+    foreign key(BRANCH) references branches(BRANCH)on delete cascade)engine=innodb;
+
+
+create table dateofvisit(
+    CNAME varchar(20),
+    DATE date,
+    primary key(CNAME),
+    foreign key(CNAME) references company(CNAME)on delete cascade)engine=innodb;
+
+
+
+create table internship(
+    CNAME varchar(20),
+    GPACUTOFF decimal(10,2),
+    TENTHCUTOFF decimal(10,2),
+    TWELTHCUTOFF decimal(10,2),
+    DIPCUTOFF decimal(10,2),
+    LASTDATEREG varchar(50),
+    primary key(CNAME),
+    foreign key(CNAME)references company(CNAME)on delete cascade)engine=innodb;
+
+
+create table jobprofile(
+    CNAME varchar(20),
+    JPROFILE varchar(20),
+    primary key(CNAME),
+    foreign key(CNAME) references company(CNAME)on delete cascade)engine=innodb;
+
+
+create table interndov(
+    CNAME varchar(20),
+    DATE date,
+    primary key(CNAME),
+    foreign key(CNAME) references internship(CNAME)on delete cascade)engine=innodb; 
+
+create table internjp(
+    CNAME varchar(20),
+    JPROFILE varchar(20),
+    primary key(CNAME),
+    foreign key(CNAME) references internship(CNAME)on delete cascade)engine=innodb;
+
+create table internapplied(
+    USN varchar(20),
+    CNAME varchar(20),
+    DATE date,
+    primary key(USN,CNAME),
+    foreign key(USN)references student(USN)on delete cascade,
+    foreign key(CNAME)references internship(CNAME)on delete cascade)engine=innodb;
+
+
+
+
+queries:
+
+
+SELECT CNAME,PACKAGE FROM company,dateofvisit WHERE company.CNAME=dateofvisit.CNAME and DATE=$date;     
+
+
+SELECT company.CNAME,company.PACKAGE,dateofvisit.DATE FROM company,dateofvisit WHERE company.CNAME=dateofvisit.CNAME and DATE='2015-04-04';
+
+
+
+
+SELECT * FROM student,company WHERE student.USN='1RV13IS409' and company.CNAME='McAffe' and student.TENTH>=company.TENTHCUTOFF; 

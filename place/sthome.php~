@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Placement Management System</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<link rel="SHORTCUT ICON" href="images/rvce.ico">
+    <!-- Custom CSS -->
+    <link href="css/modern-business.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	
+	<link id="theme" rel="stylesheet" type="text/css" href="style.css" title="theme" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+		<style>
+			fieldset {
+						border:1px soild #999;
+						border-radius:8px;
+						box-shadow:0 0 10px #999;
+						background-color:#A9E2F3;
+						font-family:cambria;
+					}
+					body {
+					background: #FAFAFA;
+					background-size: cover;
+					font-family: "cambria";
+					-webkit-font-smoothing: antialiased;
+					-moz-osx-font-smoothing: grayscale;
+					}
+			button {
+					cursor: pointer;
+					
+					width: 10%;
+					padding: 10px 15px;
+					border: 0;
+					
+					font-family: "cambria";
+					font-size: 14px;
+					font-weight: 100;
+					button-align:center;
+					
+					}
+					button:hover 
+					{
+
+						background: #27ae60;
+
+					}
+					.dropdown-menu .dropdown-toggle {
+									left: 100%;
+									position: absolute;
+									top: 0;
+									visibility: hidden;
+									margin-top: -1px;
+					}
+					.dropdown-menu li:hover .dropdown-toggle {
+						visibility: visible;
+						}
+			.dropdown:hover .dropdown-menu {
+					display: block;
+					background:#A9E2F3;
+				}
+			<!--legend {
+						display:table;
+						padding:0.2em 0.5em;
+						border:1px solid green;
+						color:green;
+						font-size:90%;
+						text-align:center;
+					}-->
+		</style>
+	</head>
+
+<body>
+
+   
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+			<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+				<img src="images/logo.png" height="60%" width="60%">
+			</div>
+			<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h3 style='color:white'> Placement Management System</h3>
+			</div>
+
+            
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="sthome.php">Student home</a>
+                    </li>
+					<?php
+						require_once('dbconnector.php');
+						session_start();
+						$usn = $_SESSION["username"];
+						//echo $usn;
+						$sql="SELECT NAME FROM student WHERE USN='$usn';";
+						$result = $mysqli->query($sql);
+						while($row = $result->fetch_assoc()) {
+					
+						//echo $row['NAME'];
+						
+						
+					?>
+                    
+					 <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $row['NAME'];} ?><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+							<li>
+								<a href="steditprofile.php">Edit Profile</a>
+							</li>
+                            <li>
+                                <a href="logout.php">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div>
+           
+        </div>
+        
+    </nav>
+
+    
+    <div class="container">
+        <!-- /.row -->
+<div class="row">
+            <div class="col-md-12">
+				<font style="font-family:cambria">	<h1 class="page-header">Registered Companies</h1></font>
+				<?php
+				
+						require_once('dbconnector.php');
+						//$date1 = date_create("now");//date object created
+						$date1 = date('Y-m-d');
+						$my_date = date('Y-m-d', strtotime($date1));
+				
+						
+						//session_start();
+						$usn = $_SESSION["username"];
+				
+						$result1 = $mysqli->query("SELECT * FROM applied WHERE USN='$usn'; " );
+						while($row = $result1->fetch_assoc()) {
+							echo "<div class="."container".">";
+							echo "<div class="."row".">";
+							echo "<fieldset>";
+							echo "<div>";
+							echo "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Company Name: ".$row['CNAME']."<br>";
+							echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Registered on: ".$row['DATE']."<br>";
+							//printf("Company Name: %s<br />", $row['CNAME']);
+							//printf("Package: %s<br />", $row['PACKAGE']);
+							//printf("Date Of Visit: %s<br />", $row['DATE']);
+							echo "</div>";
+							echo "<div>";
+							
+							//echo $row['CNAME'];
+							$cname = $row['CNAME'];
+							$result = $mysqli->query("SELECT DATE FROM dateofvisit WHERE CNAME='$cname'; " );
+							while($row = $result->fetch_assoc()) {
+								echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Coming date: ".$row['DATE']."<br><br>";
+							}	
+							echo "</fieldset><br>";
+							
+						}	?>		
+							</div>
+							</div>
+						<div class="row">
+            <div class="col-md-12">
+				<font style="font-family:cambria">	<h1 class="page-header">Internship</h1></font>	
+						<?php
+						
+						//echo "<font style="."font-family".":"."cambria".">&nbsp&nbsp&nbsp&nbsp<h2>Internship:</h2></font>";
+						$result2 = $mysqli->query("SELECT * FROM internapplied WHERE USN='$usn'; " );
+						while($row = $result2->fetch_assoc()) {
+							echo "<div class="."container".">";
+							echo "<div class="."row".">";
+							echo "<fieldset>";
+							echo "<div>";
+							echo "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Company Name: ".$row['CNAME']."<br>";
+							echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Registered on: ".$row['DATE']."<br><br>";
+							//printf("Company Name: %s<br />", $row['CNAME']);
+							//printf("Package: %s<br />", $row['PACKAGE']);
+							//printf("Date Of Visit: %s<br />", $row['DATE']);
+							echo "</div>";
+							//echo "<div>";
+							echo "</fieldset><br>";
+							echo "</div>";
+							echo "</div>";
+							
+							//echo $row['CNAME'];
+						}
+						
+						
+				?>
+            </div>
+        </div>
+		
+        <!-- Intro Content -->
+        <div class="row">
+            <div class="col-md-12">
+				<font style="font-family:cambria">	<h1 class="page-header">Upcoming Company</h1></font>
+				<?php
+				
+						//require_once('dbconnector.php');
+						//$date1 = date_create("now");//date object created
+						$date1 = date('Y-m-d');
+						$my_date = date('Y-m-d', strtotime($date1));
+				
+				
+						$result3 = $mysqli->query("SELECT company.CNAME,company.PACKAGE,dateofvisit.DATE,company.SPL FROM company,dateofvisit WHERE company.CNAME=dateofvisit.CNAME and DATE>'$my_date'; " );
+						while($row = $result3->fetch_assoc()) {
+							echo "<div class="."container".">";
+							echo "<div class="."row".">";
+							echo "<fieldset>";
+							//echo "<div>";
+							echo "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Company Name: ".$row['CNAME']."<br>";
+							echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Package: ".$row['PACKAGE']."L<br>";
+							echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Date Of Visit: ".$row['DATE']."<br><br>";
+							echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Specialization: ".$row['SPL']."<br><br>";
+							//printf("Company Name: %s<br />", $row['CNAME']);
+							//printf("Package: %s<br />", $row['PACKAGE']);
+							//printf("Date Of Visit: %s<br />", $row['DATE']);
+							//echo "</div>";
+							echo "<div>";
+							//echo "</fieldset><br>";
+							//session_start();
+							$usn = $_SESSION["username"];
+							//echo $usn;
+							$cname = $row['CNAME'];
+							//echo $cname;
+							$result7 = $mysqli->query("SELECT GPACUTOFF, TENTHCUTOFF, TWELTHCUTOFF, DIPCUTOFF, SPL FROM company WHERE CNAME='$cname'" );
+							while($row = $result7->fetch_assoc())
+							{
+								//$name = $row['NAME'];
+								 $cgpa = $row['GPACUTOFF'];
+								 $ten = $row['TENTHCUTOFF'];
+								 $twelve = $row['TWELTHCUTOFF'];
+								 $dip = $row['DIPCUTOFF'];
+								 $spl = $row['SPL'];
+								
+							}
+							//echo $spl;
+							$result15=$mysqli->query("SELECT NAME FROM student WHERE USN='$usn' and SPL='$spl'" );
+							
+							if ($result15->num_rows == 1){
+								echo "your specialization matches, we are recommended to register this company";
+							}
+							$result8 = $mysqli->query("SELECT NAME FROM student WHERE USN='$usn' and CGPA>='$cgpa' and TENTH>='$ten' and (TWELTH>='$twelve' or DIP>='$dip')" );
+								/*while($row = $result8->fetch_assoc())
+								{
+									echo $row['NAME'];
+								}*/
+								if ($result8->num_rows == 0)
+								{
+									?><p align="center"><label>You are not Elligible to Register!...</label></p>
+									<?php echo "</fieldset><br>";
+									
+									
+									
+								}
+								else if ($result8->num_rows == 1) 
+								{
+										//echo "query Success";
+								
+							
+								
+							?>
+							<form action="stregister.php" method="POST">
+							<p align="right">
+							<!--<input type="submit" value="" name="cmpbtn"-->
+							<button  type="submit" value="<?php echo $cname; ?>" name="cmpbtn">Register</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+							</p>
+							
+							</form>
+							<?php
+							echo "</div>";
+							echo "</fieldset><br>";
+							echo "</div>";
+							echo "</div>";
+							}
+							}
+						?>
+		</div>
+			</div>
+			<div class="row">
+            <div class="col-md-12">
+				<font style="font-family:cambria">	<h2 class="page-header">Internship</h2></font>
+						<?php
+						//echo "<font style="."font-family".":"."cambria".">&nbsp&nbsp&nbsp&nbsp<h2>Internship:</h2></font>";
+						$result4 = $mysqli->query("SELECT internship.CNAME,interndov.DATE FROM internship,interndov WHERE internship.CNAME=interndov.CNAME and DATE>'$my_date'; " );
+						while($row = $result4->fetch_assoc()) {
+							echo "<div class="."container".">";
+							echo "<div class="."row".">";
+							echo "<fieldset>";
+							echo "<div>";
+							echo "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Company Name: ".$row['CNAME']."<br>";
+							echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Date Of Visit: ".$row['DATE']."<br><br>";
+							//printf("Company Name: %s<br />", $row['CNAME']);
+							//printf("Date Of Visit: %s<br />", $row['DATE']);
+							//printf("Package: %s<br />", $row['PACKAGE']);
+							echo "</div>";
+							echo "<div>";?>
+							<form action="streginter.php" method="POST">
+							<p align="right">
+							<!--<input type="submit" value="" name="cmpbtn"-->
+							<button  type="submit" value="<?php echo $row['CNAME']; ?>" name="cmpbtn">Register</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+							</p>
+							
+							</form>
+							<?php 
+							echo "</div>"; 
+							echo "</fieldset><br>";
+							echo "</div>";
+							echo "</div>";
+				
+						}
+				
+				?>
+            </div>
+        </div>
+		
+		 <div class="row">
+            <div class="col-md-12">
+					<font style="font-family:cambria"><h1 class="page-header">Visited Company</h1></font>
+				<?php
+						$result5 = $mysqli->query("SELECT company.CNAME,company.PACKAGE,dateofvisit.DATE FROM company,dateofvisit WHERE company.CNAME=dateofvisit.CNAME and DATE<'$my_date'; " );
+						while($row = $result5->fetch_assoc()) {
+							echo "<fieldset>";
+							//echo "<div>";
+							echo "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Company Name: ". $row['CNAME']."<br>";
+							echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp package: ".$row['PACKAGE']."<br>";
+							echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp visited: ".$row['DATE']."<br><br>";
+							//printf("Company Name: %s<br />", $row['CNAME']);
+							//printf("Package: %s<br />", $row['PACKAGE']);
+							//printf("Visited: %s<br />", $row['DATE']);
+							echo "</fieldset><br>";
+						}
+						
+						echo "<font style="."font-family".":"."cambria"."><h2>Internship:</h2></font>";
+						$result6 = $mysqli->query("SELECT internship.CNAME,interndov.DATE FROM internship,interndov WHERE internship.CNAME=interndov.CNAME and DATE<'$my_date'; " );
+						while($row = $result6->fetch_assoc()) {
+							echo "<fieldset>";
+							//echo "<div>";
+							echo "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Company Name: ". $row['CNAME']."<br>";
+							echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Visited: ".$row['DATE']."<br><br>";
+							//printf("Company Name: %s<br />", $row['CNAME']);
+							//printf("Visited: %s<br />", $row['DATE']);
+							//printf("Package: %s<br />", $row['PACKAGE']);
+							echo "</fieldset><br>";
+						}
+				
+				?>
+            </div>
+        </div>
+		</div>
+        <!-- /.row -->
+
+        
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
